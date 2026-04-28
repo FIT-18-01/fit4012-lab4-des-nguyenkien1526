@@ -57,33 +57,49 @@ cmake --build build
 
 ## 3. Input / Đầu vào
 
-TODO_STUDENT: Mô tả rõ đầu vào của chương trình sau khi em hoàn thiện bài lab.
+Chương trình yêu cầu nhập theo thứ tự:
 
-Gợi ý nên nêu:
-- plaintext đang được nhập như thế nào
-- key đang được nhập như thế nào
-- chương trình nhận 1 block hay nhiều block
-- định dạng dữ liệu là chuỗi bit, chuỗi ký tự hay file
+```text
+Chọn mode:
+1 = DES encrypt
+2 = DES decrypt
+3 = TripleDES encrypt
+4 = TripleDES decrypt
+```
+
+### Mode 1: DES encrypt
+Nhập `mode`, sau đó nhập plaintext nhị phân và key 64-bit. Nếu plaintext dài hơn 64 bit, chương trình chia thành nhiều block 64 bit. Block cuối nếu thiếu bit thì được đệm thêm `0` ở cuối trước khi mã hóa.
+
+### Mode 2: DES decrypt
+Nhập `mode`, ciphertext nhị phân và key 64-bit. Chương trình giải mã từng block 64 bit theo thứ tự round key đảo ngược.
+
+### Mode 3: TripleDES encrypt
+Nhập `mode`, plaintext 64 bit, rồi nhập `K1`, `K2`, `K3`.
+
+### Mode 4: TripleDES decrypt
+Nhập `mode`, ciphertext 64 bit, rồi nhập `K1`, `K2`, `K3`.
+
+Dữ liệu đầu vào được đọc bằng `cin`, nên mỗi giá trị nên được nhập trên một dòng riêng hoặc cách nhau bởi khoảng trắng.
 
 ## 4. Output / Đầu ra
 
-TODO_STUDENT: Mô tả rõ đầu ra của chương trình.
+- Mode 1 in ra ciphertext cuối cùng dưới dạng chuỗi bit.
+- Mode 2 in ra plaintext sau giải mã dưới dạng chuỗi bit.
+- Mode 3 in ra ciphertext TripleDES cuối cùng.
+- Mode 4 in ra plaintext TripleDES cuối cùng.
 
-Gợi ý nên nêu:
-- ciphertext hiển thị ra sao
-- có in round keys hay không
-- có hỗ trợ giải mã hay không
-- với TripleDES thì đầu ra gồm những gì
+Chương trình có thể in prompt tiếng Việt để dễ thao tác, nhưng chuỗi bit kết quả luôn được in ở dòng cuối để phục vụ auto-check.
 
 ## 5. Padding đang dùng
 
-TODO_STUDENT: Giải thích cơ chế padding em dùng.
+Em dùng **zero padding**.
 
-Gợi ý:
-- nếu plaintext dài hơn 64 bit thì chia block như thế nào
-- nếu thiếu bit thì pad bằng `0` ra sao
-- hạn chế của zero padding là gì
-- vì sao cách này chỉ phù hợp cho bài học nhập môn, không phải thiết kế an toàn hoàn chỉnh trong thực tế
+- Nếu plaintext vừa đủ 64 bit, giữ nguyên.
+- Nếu dài hơn 64 bit, chia thành nhiều block 64 bit liên tiếp.
+- Nếu block cuối thiếu bit, thêm `0` vào cuối cho đủ 64 bit.
+- Khi giải mã, chương trình trả lại toàn bộ chuỗi bit đã giải mã, bao gồm cả các bit `0` được padding nếu chúng nằm ở cuối dữ liệu.
+
+Zero padding đơn giản và phù hợp cho bài học nhập môn, nhưng không phải lựa chọn hoàn chỉnh trong hệ thống thực tế vì không tự mô tả rõ đâu là dữ liệu thật và đâu là dữ liệu đệm.
 
 ## 6. Tests bắt buộc
 
